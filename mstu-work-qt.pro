@@ -13,8 +13,19 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    authwindow.cpp \
+    user.cpp \
+    admin.cpp \
+    student.cpp \
+    librarian.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    authwindow.h \
+    user.h \
+    admin.h \
+    student.h \
+    librarian.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    authwindow.ui
