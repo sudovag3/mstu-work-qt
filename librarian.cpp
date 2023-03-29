@@ -2,8 +2,7 @@
 
 // Конструктор класса Librarian
 Librarian::Librarian(const QString& login, const QString& password)
-    : User(login, password) {
-    user_type_ = "librarian";
+    : User(login, password, "librarian") {
 }
 
 // Функция получения типа пользователя

@@ -1,6 +1,8 @@
 #include "authwindow.h"
 #include "ui_authwindow.h"
+#include "user.h"
 #include <QMessageBox>
+#include "mainwindow.h"
 
 AuthWindow::AuthWindow(QWidget *parent) :
     QDialog(parent),
@@ -18,9 +20,28 @@ void AuthWindow::on_loginButton_clicked()
 {
     QString login = ui->loginEdit->text();
     QString password = ui->passwordEdit->text();
+//    User newUser = User(login, password);
+    User* user = User::find_user(login, password);
+
 
     //Проверка пароля и логина
-    if (login == "Test"){
+    if (user){
+        if (user->get_type() == "Admin"){
+           QMessageBox::information(this, "Добро Пожаловать!", "Вы - Администратор");
+           MainWindow *mainWindow = new MainWindow(this);
+           mainWindow->show();
+           mainWindow->showAdminForm();
+           this->hide();
+           // TODO
+        } else if (user->get_type() == "Student"){
+            QMessageBox::information(this, "Добро Пожаловать!", "Вы - Студент");
+            // TODO
+        } else if (user->get_type() == "Librarian"){
+            QMessageBox::information(this, "Добро Пожаловать!", "Вы - Библеотекарь");
+            // TODO
+        } else if (user->get_type() == "User"){
+            QMessageBox::information(this, "Добро Пожаловать!", "Вы - Гость");
+         }
 
     } else {
         QMessageBox::warning(this, "Упс", "Неудачная попытка входа");

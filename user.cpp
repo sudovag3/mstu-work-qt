@@ -6,23 +6,32 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
+#include<QDebug>
 
 // Конструктор класса User
-User::User(const QString& login, const QString& password)
-    : login_(login), password_(password), user_type_("User") {
+User::User(const QString& login, const QString& password, const QString& user_type)
+    : login_(login), password_(password), user_type_(user_type) {
     // Сохраняем логин и пароль в файл
     QFile file("users.json");
-    file.open(QIODevice::ReadWrite | QIODevice::Text);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        qWarning() << "Failed to open file";
+        return;
+    }
     QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
     QJsonObject users = doc.object();
     QJsonObject user;
+    qInfo() << "Creating user " << login_;
     user["password"] = password_;
     user["Type"] = user_type_;
     users[login_] = user;
     doc.setObject(users);
     file.seek(0);
     file.write(doc.toJson());
+    if (!file.flush()) {
+        qWarning() << "Failed to write data to file";
+    }
     file.close();
+    qInfo() << "Created user: " << login_;
 }
 
 // Виртуальный деструктор класса User
@@ -53,7 +62,7 @@ User* User::find_user(const QString& login, const QString& password) {
     } else if (user_type == "librarian") {
         return new Librarian(login, password);
     } else {
-        return new User(login, password);
+        return new User(login, password, user_type);
     }
 }
 

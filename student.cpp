@@ -2,8 +2,7 @@
 
 // Конструктор класса Student
 Student::Student(const QString& login, const QString& password)
-    : User(login, password) {
-    user_type_ = "student";
+    : User(login, password, "student") {
 }
 
 // Функция получения типа пользователя

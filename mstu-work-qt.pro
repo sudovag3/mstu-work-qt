@@ -18,14 +18,19 @@ SOURCES += main.cpp\
     user.cpp \
     admin.cpp \
     student.cpp \
-    librarian.cpp
+    librarian.cpp \
+    adminform.cpp
 
 HEADERS  += mainwindow.h \
     authwindow.h \
     user.h \
     admin.h \
     student.h \
-    librarian.h
+    librarian.h \
+    adminform.h
 
 FORMS    += mainwindow.ui \
-    authwindow.ui
+    authwindow.ui \
+    adminform.ui
+
+DISTFILES +=
