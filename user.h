@@ -33,4 +33,5 @@ protected:
     void update_file();
 };
 
+
 #endif // USER_H

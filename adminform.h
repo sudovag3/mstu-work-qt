@@ -15,6 +15,9 @@ public:
     explicit AdminForm(QWidget *parent = 0);
     ~AdminForm();
 
+private slots:
+    void on_createUserButton_clicked();
+
 private:
     Ui::AdminForm *ui;
 };

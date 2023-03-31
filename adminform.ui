@@ -54,7 +54,7 @@
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="2" column="1">
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QRadioButton" name="radioStudent">
       <property name="text">
        <string>Студент</string>
       </property>
@@ -81,7 +81,7 @@
      <widget class="QLineEdit" name="createPassword"/>
     </item>
     <item row="5" column="1">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="createUserButton">
       <property name="text">
        <string>Создать пользователя</string>
       </property>
@@ -95,20 +95,30 @@
      </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QRadioButton" name="radioButton_2">
+     <widget class="QRadioButton" name="radioLibrarian">
       <property name="text">
        <string>Бибилиотекарь</string>
       </property>
      </widget>
     </item>
     <item row="4" column="1">
-     <widget class="QRadioButton" name="radioButton_3">
+     <widget class="QRadioButton" name="radioAdmin">
       <property name="text">
        <string>Администратор</string>
       </property>
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QListWidget" name="userListWidget">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>30</y>
+     <width>451</width>
+     <height>351</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <resources/>

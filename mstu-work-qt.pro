@@ -27,7 +27,8 @@ HEADERS  += mainwindow.h \
     admin.h \
     student.h \
     librarian.h \
-    adminform.h
+    adminform.h \
+    user_find.h
 
 FORMS    += mainwindow.ui \
     authwindow.ui \
