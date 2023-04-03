@@ -22,6 +22,10 @@ private slots:
     void on_authFormButton_clicked();
 
 
+    void on_DocButton_clicked();
+
+    void on_InfAuthorButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     AuthWindow * authWindow;
