@@ -21,7 +21,7 @@ void AuthWindow::on_loginButton_clicked()
 {
     QString login = ui->loginEdit->text();
     QString password = ui->passwordEdit->text();
-//    User newUser = User(login, password);
+ //   User newUser = User(login, password, "admin");
     User* user = User::find_user(login, password);
 
 
