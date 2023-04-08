@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "studentform.h"
+#include "librarianform.h"
 
 AuthWindow::AuthWindow(QWidget *parent) :
     QDialog(parent),
@@ -42,6 +43,9 @@ void AuthWindow::on_loginButton_clicked()
             // TODO
         } else if (user->get_type() == "Librarian"){
             QMessageBox::information(this, "Добро Пожаловать!", "Вы - Библеотекарь");
+            Librarianform *Libform = new Librarianform(this);
+            Libform->show();
+            this->hide();
             // TODO
         } else if (user->get_type() == "User"){
             QMessageBox::information(this, "Добро Пожаловать!", "Вы - Гость");

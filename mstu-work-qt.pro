@@ -15,6 +15,7 @@ TEMPLATE = app
 SOURCES += main.cpp\
     authors.cpp \
     documentation.cpp \
+    librarianform.cpp \
         mainwindow.cpp \
     authwindow.cpp \
     studentform.cpp \
@@ -28,6 +29,7 @@ HEADERS  += mainwindow.h \
     authors.h \
     authwindow.h \
     documentation.h \
+    librarianform.h \
     studentform.h \
     user.h \
     admin.h \
@@ -41,6 +43,7 @@ FORMS    += mainwindow.ui \
     authwindow.ui \
     adminform.ui \
     documentation.ui \
+    librarianform.ui \
     studentform.ui
 
 DISTFILES +=
