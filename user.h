@@ -8,6 +8,8 @@ class User {
 public:
     // Конструктор, принимающий логин и пароль
     User(const QString& login, const QString& password, const QString& user_type);
+    User(const QString &login, const QString &password_hash, const QString &type, bool is_hashed);
+
 
     // Виртуальный деструктор
     virtual ~User();
@@ -23,6 +25,9 @@ public:
     QString get_login() const;
     QString get_password() const;
     virtual QString get_type() const;
+
+    static QString generate_salt();
+    static QString hash_password(const QString& password, const QString& salt);
 
 protected:
     QString login_;      // Логин пользователя

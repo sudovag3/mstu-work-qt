@@ -26,17 +26,17 @@ QList<User*> read_users_from_file() {
     for (QString key : users.keys()) {
         QJsonObject user = users[key].toObject();
         QString login = key;
-        QString password = user["password"].toString();
+        QString password_hash = user["password_hash"].toString();
         QString user_type = user["Type"].toString();
 
         if (user_type == "admin") {
-            users_list.append(new Admin(login, password));
+            users_list.append(new Admin(login, password_hash, true));
         } else if (user_type == "student") {
-            users_list.append(new Student(login, password));
+            users_list.append(new Student(login, password_hash, true));
         } else if (user_type == "librarian") {
-            users_list.append(new Librarian(login, password));
+            users_list.append(new Librarian(login, password_hash, true));
         } else {
-            users_list.append(new User(login, password, user_type));
+            users_list.append(new User(login, password_hash, user_type, true));
         }
     }
 

@@ -8,6 +8,7 @@ class Librarian : public User {
 public:
     // Конструктор, принимающий логин и пароль
     Librarian(const QString& login, const QString& password);
+    Librarian(const QString& login, const QString& password, bool is_hashed);
 
     // Функция получения типа пользователя
     QString get_type() const override;

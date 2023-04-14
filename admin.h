@@ -9,6 +9,9 @@ public:
     // Конструктор, принимающий логин и пароль
     Admin(const QString& login, const QString& password);
 
+    Admin(const QString& login, const QString& password, bool is_hashed);
+
+
     // Функция получения типа пользователя
     QString get_type() const override;
 };
