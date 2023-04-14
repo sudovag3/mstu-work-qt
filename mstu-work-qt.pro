@@ -34,4 +34,5 @@ FORMS    += mainwindow.ui \
     authwindow.ui \
     adminform.ui
 
-DISTFILES +=
+DISTFILES += \
+    .gitignore
