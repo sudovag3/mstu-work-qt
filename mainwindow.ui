@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>521</width>
+    <height>293</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Меню</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="authFormButton">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>190</x>
+      <y>90</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -27,14 +27,40 @@
      <string>Войти в систему</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="DocButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>90</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Документация</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="InfAuthorButton">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>90</y>
+      <width>161</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Авторы</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
-     <height>21</height>
+     <width>521</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

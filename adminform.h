@@ -18,6 +18,8 @@ public:
 private slots:
     void on_createUserButton_clicked();
 
+    void on_ButtonClose_clicked();
+
 private:
     Ui::AdminForm *ui;
 };

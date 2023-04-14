@@ -14,7 +14,6 @@ class AuthWindow : public QDialog
 public:
     explicit AuthWindow(QWidget *parent = 0);
     ~AuthWindow();
-
 private slots:
     void on_loginButton_clicked();
 

@@ -2,6 +2,7 @@
 #include "ui_adminform.h"
 #include "user.h"
 #include "user_find.h"
+#include "authwindow.h"
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -108,3 +109,11 @@ void AdminForm::on_createUserButton_clicked()
     ui->createLogin->clear();
     ui->createPassword->clear();
 }
+
+void AdminForm::on_ButtonClose_clicked()
+{
+    AuthWindow *authwind = new AuthWindow(this);
+    authwind->show();
+    this->close();
+}
+
