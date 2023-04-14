@@ -13,8 +13,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    authors.cpp \
+    documentation.cpp \
+    librarianform.cpp \
         mainwindow.cpp \
     authwindow.cpp \
+    studentform.cpp \
     user.cpp \
     admin.cpp \
     student.cpp \
@@ -22,7 +26,11 @@ SOURCES += main.cpp\
     adminform.cpp
 
 HEADERS  += mainwindow.h \
+    authors.h \
     authwindow.h \
+    documentation.h \
+    librarianform.h \
+    studentform.h \
     user.h \
     admin.h \
     student.h \
@@ -31,8 +39,12 @@ HEADERS  += mainwindow.h \
     user_find.h
 
 FORMS    += mainwindow.ui \
+    authors.ui \
     authwindow.ui \
-    adminform.ui
+    adminform.ui \
+    documentation.ui \
+    librarianform.ui \
+    studentform.ui
 
 DISTFILES += \
     .gitignore

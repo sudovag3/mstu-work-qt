@@ -3,6 +3,8 @@
 #include "user.h"
 #include <QMessageBox>
 #include "mainwindow.h"
+#include "studentform.h"
+#include "librarianform.h"
 
 AuthWindow::AuthWindow(QWidget *parent) :
     QDialog(parent),
@@ -20,7 +22,7 @@ void AuthWindow::on_loginButton_clicked()
 {
     QString login = ui->loginEdit->text();
     QString password = ui->passwordEdit->text();
-//    User newUser = User(login, password);
+ //   User newUser = User(login, password, "admin");
     User* user = User::find_user(login, password);
 
 
@@ -35,9 +37,15 @@ void AuthWindow::on_loginButton_clicked()
            // TODO
         } else if (user->get_type() == "Student"){
             QMessageBox::information(this, "Добро Пожаловать!", "Вы - Студент");
+            Studentform *studform = new Studentform(this);
+            studform->show();
+            this->hide();
             // TODO
         } else if (user->get_type() == "Librarian"){
             QMessageBox::information(this, "Добро Пожаловать!", "Вы - Библеотекарь");
+            Librarianform *Libform = new Librarianform(this);
+            Libform->show();
+            this->hide();
             // TODO
         } else if (user->get_type() == "User"){
             QMessageBox::information(this, "Добро Пожаловать!", "Вы - Гость");

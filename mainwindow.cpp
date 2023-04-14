@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "documentation.h"
+#include "authors.h"
 #include "adminform.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -27,3 +29,19 @@ void MainWindow::showAdminForm()
     adminWindow = new AdminForm(this);
     adminWindow->show();
 }
+
+void MainWindow::on_DocButton_clicked()
+{
+    Documentation Docum;
+    Docum.setModal(true);
+    Docum.exec();
+}
+
+
+void MainWindow::on_InfAuthorButton_clicked()
+{
+    Authors Author;
+    Author.setModal(true);
+    Author.exec();
+}
+
