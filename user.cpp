@@ -112,6 +112,24 @@ QString User::generate_salt() {
     return salt; // Возвращаем сгенерированную соль
 }
 
+void User::delete_user_from_file(const QString &login) {
+    QFile file("users.json");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    file.close();
+    QJsonObject users = doc.object();
+    if (!users.contains(login)) {
+        return;
+    }
+    users.remove(login);
+    doc.setObject(users);
+    file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
+    file.write(doc.toJson());
+    file.close();
+}
+
 
 // Функция поиска пользователя по логину и паролю
 User* User::find_user(const QString& login, const QString& password) {
@@ -165,6 +183,28 @@ void User::set_login(const QString& login) {
     file.close();
     login_ = login;
 }
+
+void User::set_type(const QString &type) {
+    QFile file("users.json");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    file.close();
+    QJsonObject users = doc.object();
+    if (!users.contains(login_)) {
+        return;
+    }
+    QJsonObject user = users.take(login_).toObject();
+    user["Type"] = type; // Изменяем тип пользователя
+    users[login_] = user;
+    doc.setObject(users);
+    file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
+    file.write(doc.toJson());
+    file.close();
+    user_type_ = type; // Обновляем значение типа в экземпляре класса
+}
+
 
 // Функция изменения пароля
 void User::set_password(const QString& password) {

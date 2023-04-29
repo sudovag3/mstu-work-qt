@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     admin.cpp \
     student.cpp \
     librarian.cpp \
-    adminform.cpp
+    adminform.cpp \
+    edituserform.cpp
 
 HEADERS  += mainwindow.h \
     authors.h \
@@ -36,7 +37,8 @@ HEADERS  += mainwindow.h \
     student.h \
     librarian.h \
     adminform.h \
-    user_find.h
+    user_find.h \
+    edituserform.h
 
 FORMS    += mainwindow.ui \
     authors.ui \
@@ -44,7 +46,8 @@ FORMS    += mainwindow.ui \
     adminform.ui \
     documentation.ui \
     librarianform.ui \
-    studentform.ui
+    studentform.ui \
+    edituserform.ui
 
 DISTFILES += \
     .gitignore

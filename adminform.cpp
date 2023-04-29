@@ -3,6 +3,7 @@
 #include "user.h"
 #include "user_find.h"
 #include "authwindow.h"
+#include "edituserform.h"
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -12,6 +13,7 @@
 #include <QTableWidgetItem>
 #include <QWidget>
 #include <QMessageBox>
+#include <QPointer>
 
 
 AdminForm::AdminForm(QWidget *parent) :
@@ -19,6 +21,12 @@ AdminForm::AdminForm(QWidget *parent) :
     ui(new Ui::AdminForm)
 {
     ui->setupUi(this);
+    update_user_list();
+
+
+}
+
+void AdminForm::update_user_list() {
     ui->userListWidget->clear(); // Очищаем список пользователей
 
     QList<User*> users_list = read_users_from_file();
@@ -30,15 +38,6 @@ AdminForm::AdminForm(QWidget *parent) :
         QListWidgetItem* item = new QListWidgetItem(ui->userListWidget);
         item->setSizeHint(QSize(0, 40)); // Задаем фиксированную высоту для строки списка
         item->setTextAlignment(Qt::AlignVCenter); // Выравнивание текста по вертикальному центру
-//        QHBoxLayout* layout = new QHBoxLayout();
-//        layout->setAlignment(Qt::AlignVCenter);
-//        layout->addWidget(edit_button);
-//        layout->addWidget(delete_button);
-//        QWidget* widget = new QWidget(ui->userListWidget);
-//        widget->setLayout(layout);
-//        widget->setContentsMargins(0, 0, 0, 0);
-//        ui->userListWidget->setItemWidget(item, widget);
-//        ui->userListWidget->addItem(item);
 
         // Создаем виджет с информацией о пользователе
         QWidget* userWidget = new QWidget(ui->userListWidget);
@@ -59,25 +58,39 @@ AdminForm::AdminForm(QWidget *parent) :
         item->setSizeHint(userWidget->sizeHint());
         ui->userListWidget->setItemWidget(item, userWidget);
 
-        // Подключаем обработчики нажатия на кнопки
         connect(editButton, &QPushButton::clicked, [=]() {
-            // TODO: Реализовать обработчик нажатия на кнопку "Редактировать"
-            // Необходимо открыть форму редактирования пользователя, передав ей указатель на объект пользователя
-            // и обработать изменения в файле users.json
-            // Возможно, стоит использовать сигналы и слоты для обновления списка пользователей на главном окне
+            // Создаем и показываем форму редактирования пользователя
+            EditUserForm *editUserForm = new EditUserForm(user);
+            editUserForm->setAttribute(Qt::WA_DeleteOnClose);
+            connect(editUserForm, &EditUserForm::userEdited, this, &AdminForm::on_userEdited);
+            editUserForm->open();
         });
 
         connect(deleteButton, &QPushButton::clicked, [=]() {
-            // TODO: Реализовать обработчик нажатия на кнопку "Удалить"
-            // Необходимо удалить объект пользователя и обновить данные в файле users.json
-            // Возможно, стоит использовать сигналы и слоты для обновления списка пользователей на главном окне
+            // Удаляем пользователя из файла
+            User::delete_user_from_file(user->get_login());
+
+            // Удаляем пользователя из списка пользователей
+            delete user;
+            delete item;
+
+            // Вызываем сигнал, что пользователь был удален
+            emit userDeleted();
+            update_user_list();
         });
     }
 
-    for (User* user : users_list) {
-        delete user;
-    }
+//    for (User* user : users_list) {
+//        delete user;
+//    }
+}
 
+
+void AdminForm::on_userEdited() {
+    // Обновляем список пользователей
+    QMessageBox::information(this, tr("Успешно"),
+                             tr("Пользователь отредактирован успешно!"));
+    update_user_list();
 }
 
 AdminForm::~AdminForm()
@@ -108,6 +121,7 @@ void AdminForm::on_createUserButton_clicked()
     // Очищаем поля ввода
     ui->createLogin->clear();
     ui->createPassword->clear();
+    update_user_list();
 }
 
 void AdminForm::on_ButtonClose_clicked()

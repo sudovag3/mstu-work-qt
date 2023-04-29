@@ -15,7 +15,16 @@ public:
     explicit AdminForm(QWidget *parent = 0);
     ~AdminForm();
 
+signals:
+    void userEdited();
+    void userDeleted();
+
 private slots:
+
+    void update_user_list();
+
+    void on_userEdited();
+
     void on_createUserButton_clicked();
 
     void on_ButtonClose_clicked();
