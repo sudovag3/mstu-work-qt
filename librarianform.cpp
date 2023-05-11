@@ -1,6 +1,7 @@
 #include "librarianform.h"
 #include "ui_librarianform.h"
 #include "authwindow.h"
+#include <QMessageBox>
 
 Librarianform::Librarianform(QWidget *parent) :
     QDialog(parent),
@@ -18,6 +19,25 @@ void Librarianform::on_ButtonClose_clicked()
 {
     AuthWindow *authwind = new AuthWindow(this);
     authwind->show();
-    this->close();
+    this->hide();
 }
 
+
+void Librarianform::on_Downloadimage_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Choose"), "", tr("Images (*.png *.jpg *.jpeg *.bmp *.gif)"));
+    if(QString::compare(filename, QString()) !=0){
+        QImage image;
+        bool valid = image.load(filename);
+
+        if(valid){
+          image = image.scaledToWidth( ui->Lbl_image->width(), Qt::SmoothTransformation);
+          image = image.scaledToHeight( ui->Lbl_image->height(), Qt::SmoothTransformation);
+          ui->Lbl_image->setPixmap(QPixmap::fromImage(image));
+        }
+        else {
+            QMessageBox::information(this, tr("Ошибка"),
+                                     tr("Обложка не загруженна!"));
+        }
+    }
+}

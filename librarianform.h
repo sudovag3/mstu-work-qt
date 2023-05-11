@@ -2,6 +2,7 @@
 #define LIBRARIANFORM_H
 
 #include <QDialog>
+#include <QFileDialog>
 
 namespace Ui {
 class Librarianform;
@@ -17,6 +18,8 @@ public:
 
 private slots:
     void on_ButtonClose_clicked();
+
+    void on_Downloadimage_clicked();
 
 private:
     Ui::Librarianform *ui;
