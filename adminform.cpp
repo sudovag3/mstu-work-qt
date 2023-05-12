@@ -128,6 +128,6 @@ void AdminForm::on_ButtonClose_clicked()
 {
     AuthWindow *authwind = new AuthWindow(this);
     authwind->show();
-    this->close();
+    this->hide();
 }
 
