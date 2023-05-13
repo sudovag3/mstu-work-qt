@@ -203,7 +203,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QListWidget" name="listWidget">
+  <widget class="QListWidget" name="BooklistWidget">
    <property name="geometry">
     <rect>
      <x>510</x>

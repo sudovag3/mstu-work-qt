@@ -1,7 +1,17 @@
+#include "book.h"
 #include "librarianform.h"
 #include "ui_librarianform.h"
 #include "authwindow.h"
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QList>
+#include <QPushButton>
+#include <QString>
+#include <QTableWidgetItem>
+#include <QWidget>
 #include <QMessageBox>
+#include <QPointer>
 
 Librarianform::Librarianform(QWidget *parent) :
     QDialog(parent),

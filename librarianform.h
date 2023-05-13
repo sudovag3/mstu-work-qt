@@ -17,6 +17,7 @@ public:
     ~Librarianform();
 
 private slots:
+
     void on_ButtonClose_clicked();
 
     void on_Downloadimage_clicked();
