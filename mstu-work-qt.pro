@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     librarian.cpp \
     adminform.cpp \
     edituserform.cpp \
-    book.cpp
+    book.cpp \
+    editbookform.cpp
 
 HEADERS  += mainwindow.h \
     authors.h \
@@ -40,7 +41,8 @@ HEADERS  += mainwindow.h \
     adminform.h \
     user_find.h \
     edituserform.h \
-    book.h
+    book.h \
+    editbookform.h
 
 FORMS    += mainwindow.ui \
     authors.ui \
@@ -49,6 +51,7 @@ FORMS    += mainwindow.ui \
     documentation.ui \
     librarianform.ui \
     studentform.ui \
+    editbookform.ui \
     edituserform.ui
 
 DISTFILES += \
