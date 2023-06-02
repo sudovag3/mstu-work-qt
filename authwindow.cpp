@@ -38,6 +38,7 @@ void AuthWindow::on_loginButton_clicked()
         } else if (user->get_type() == "Student"){
             QMessageBox::information(this, "Добро Пожаловать!", "Вы - Студент");
             Studentform *studform = new Studentform(this);
+            studform->login = login;
             studform->show();
             this->hide();
             // TODO
