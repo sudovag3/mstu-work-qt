@@ -53,7 +53,7 @@
     <string>Выйти</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="BibllistWidget">
+  <widget class="QListWidget" name="BiblListWidget">
    <property name="geometry">
     <rect>
      <x>670</x>
@@ -73,14 +73,14 @@
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Взято&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Мои книги&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>670</x>
-     <y>60</y>
+     <x>680</x>
+     <y>70</y>
      <width>141</width>
      <height>28</height>
     </rect>
@@ -89,20 +89,7 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Библиотека&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="AddButton">
-   <property name="geometry">
-    <rect>
-     <x>500</x>
-     <y>340</y>
-     <width>111</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Взять</string>
-   </property>
-  </widget>
-  <widget class="QListWidget" name="BooklistWidget">
+  <widget class="QListWidget" name="BookListWidget">
    <property name="geometry">
     <rect>
      <x>10</x>

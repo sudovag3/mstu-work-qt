@@ -23,8 +23,12 @@ void AuthWindow::on_loginButton_clicked()
     QString login = ui->loginEdit->text();
     QString password = ui->passwordEdit->text();
 //    User newUser = User(login, password, "admin");
-    User* user = User::find_user(login, password);
 
+    if(User::count_users() == 0) {
+            User newUser = User(login, password, "admin");
+        }
+
+    User* user = User::find_user(login, password);
 
     //Проверка пароля и логина
     if (user){
@@ -39,6 +43,7 @@ void AuthWindow::on_loginButton_clicked()
             QMessageBox::information(this, "Добро Пожаловать!", "Вы - Студент");
             Studentform *studform = new Studentform(this);
             studform->login = login;
+            studform->update_student_book_list();
             studform->show();
             this->hide();
             // TODO

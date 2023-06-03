@@ -35,6 +35,9 @@ public:
     void save();
     void remove();
 
+
+    bool operator==(const Book &other) const;
+
 private:
     QString id_;
     QString title_;

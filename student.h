@@ -13,6 +13,7 @@ public:
 
     // Функция получения типа пользователя
     QString get_type() const override;
+    static QList<Student> getStudents();
 };
 
 #endif // STUDENT_H

@@ -7,7 +7,10 @@
 #include "book.h"
 #include "editbookform.h"
 #include<QDebug>
-
+#include "student.h"
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QMessageBox>
 
 Librarianform::Librarianform(QWidget *parent) :
     QDialog(parent),
@@ -15,6 +18,7 @@ Librarianform::Librarianform(QWidget *parent) :
 {
     ui->setupUi(this);
     update_book_list();
+    update_student_list();
 }
 
 Librarianform::~Librarianform()
@@ -93,6 +97,69 @@ void Librarianform::update_book_list(const QString& author, const QString& title
     }
 }
 
+void Librarianform::update_student_list() {
+    ui->studentListWidget->clear(); // Очищаем список студентов
+
+    QList<Student> student_list = Student::getStudents();
+    for (Student &student : student_list) {
+        QString student_info = QString("Login: %1")
+                        .arg(student.get_login());
+        QListWidgetItem* item = new QListWidgetItem(ui->studentListWidget);
+        item->setSizeHint(QSize(0, 60)); // Задаем фиксированную высоту для строки списка
+        item->setTextAlignment(Qt::AlignVCenter); // Выравнивание текста по вертикальному центру
+
+        // Создаем виджет с информацией о студенте
+        QWidget* studentWidget = new QWidget(ui->studentListWidget);
+        QVBoxLayout* studentLayout = new QVBoxLayout(studentWidget);
+        QLabel* studentInfoLabel = new QLabel(student_info);
+        studentLayout->addWidget(studentInfoLabel);
+
+        // Создаем виджет с кнопками
+        QWidget* buttonWidget = new QWidget(ui->studentListWidget);
+        QGridLayout* buttonLayout = new QGridLayout(buttonWidget);
+        QPushButton* detailButton = new QPushButton("Подробнее");
+        buttonLayout->addWidget(detailButton, 0, 0);
+
+        // Добавляем виджеты к элементу списка
+        studentLayout->addWidget(buttonWidget);
+        item->setSizeHint(studentWidget->sizeHint());
+        ui->studentListWidget->setItemWidget(item, studentWidget);
+
+        connect(detailButton, &QPushButton::clicked, [=]() {
+            // Код, который покажет окно с информацией о студенте
+            // Получаем список книг студента из файла studentbooks.json
+            QFile file("studentbooks.json");
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                QMessageBox::warning(this, "Внимание","Произошли проблемы с открытием файла \nСкорее всего, никто из студентов еще не брал книг");
+                qWarning() << "Failed to open file";
+                return;
+            }
+            QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+            file.close();
+            QJsonObject student_books = doc.object();
+            if (!student_books.contains(student.get_login())) {
+                QMessageBox::information(this, "Информация","У студента отсутсвуют задолженности");
+                qWarning() << "Student does not exist in the book file";
+                return;
+            }
+
+            QJsonArray books = student_books[student.get_login()].toArray();
+            QString book_list = "Books: \n";
+            for (const QJsonValue &book : books) {
+                QJsonObject bookObj = book.toObject();
+                QString bookId = bookObj["Idd_Book"].toString();
+                Book book_ = Book::getBookById(bookId);
+
+                    // Добавляем информацию о книге в список
+                book_list += "Idd_Book: " + book_.id() + ", Название: " + book_.title() + "\n";
+            }
+
+            // Выводим информацию о студенте и список его книг в новом окне
+            QMessageBox::information(this, "Student Details", QString("Login: %1\n%2")
+                                    .arg(student.get_login()).arg(book_list));
+        });
+    }
+}
 
 
 void Librarianform::on_Downloadimage_clicked()

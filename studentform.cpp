@@ -3,6 +3,8 @@
 #include "ui_studentform.h"
 #include "authwindow.h"
 #include "studentbook.h"
+#include "book.h"
+#include "bookform.h"
 
 #include <QString>
 
@@ -28,7 +30,8 @@ Studentform::Studentform(QWidget *parent) :
     ui(new Ui::Studentform)
 {
     ui->setupUi(this);
-    update_student();
+    update_bibl_book_list("", "");
+//    update_student_book_list();
 }
 
 Studentform::~Studentform()
@@ -36,54 +39,92 @@ Studentform::~Studentform()
     delete ui;
 }
 
-void Studentform::update_student()
-{
+void Studentform::update_student_book_list() {
+    ui->BookListWidget->clear();
+    qWarning() << login;
+    QList<Book> student_books = StudentBook::getBooksByStudent(login);
+    for (Book &book : student_books) {
+        QString book_info = QString("Название: %1, Автор: %2, Описание: %3")
+                            .arg(book.title())
+                            .arg(book.author())
+                            .arg(book.description());
 
-    ui->BooklistWidget->clear(); // Очищаем список взятых книг
-    QFile file("studentbooks.json");
-    if (!file.open(QIODevice::ReadWrite | QIODevice::Text)) {
-        qWarning() << "Failed to open file";
-        return;
+        QListWidgetItem* item = new QListWidgetItem();
+        ui->BookListWidget->addItem(item);
+        item->setSizeHint(QSize(0, 50)); // Adjust the size to fit your widget
+
+        QWidget* widget = new QWidget();
+        QLabel* label = new QLabel(book_info);
+        QPushButton* viewButton = new QPushButton("Смотреть");
+        QPushButton* returnButton = new QPushButton("Вернуть");
+
+        QHBoxLayout* layout = new QHBoxLayout();
+        layout->addWidget(label);
+        layout->addWidget(viewButton);
+        layout->addWidget(returnButton);
+        widget->setLayout(layout);
+
+        ui->BookListWidget->setItemWidget(item, widget);
+
+        connect(viewButton, &QPushButton::clicked, [=]() {
+            BookForm *bookForm = new BookForm(&book);
+            bookForm->setAttribute(Qt::WA_DeleteOnClose);
+            bookForm->open();
+        });
+
+        connect(returnButton, &QPushButton::clicked, [=]() {
+            StudentBook::returnBook(login, book);
+            update_student_book_list();
+        });
     }
-    doc = QJsonDocument::fromJson(file.readAll());
-    file.close();
-    if(docError.errorString().toInt()==QJsonParseError::NoError) {
-        docAr = QJsonValue(doc.object().value(login)).toArray(); // выводим данные авторизованного студента
-
-        for (int i = 0; i < docAr.count(); i++) {
-
-            QString Idd_Book = docAr.at(i).toObject().value("Idd_Book").toString(); //получаем Idd_Book
-
-
-            QString book_info = QString("Idd_Book: %1").arg(Idd_Book);
-
-
-            QListWidgetItem* item = new QListWidgetItem(ui->BooklistWidget);
-            item->setSizeHint(QSize(0, 40)); // Задаем фиксированную высоту для строки списка
-            item->setTextAlignment(Qt::AlignVCenter); // Выравнивание текста по вертикальному центру
-
-            // Создаем виджет с информацией о пользователе
-            QWidget* bookWidget = new QWidget(ui->BooklistWidget);
-            QVBoxLayout* bookLayout = new QVBoxLayout(bookWidget);
-            QLabel* bookInfoLabel = new QLabel(book_info);
-            bookLayout->addWidget(bookInfoLabel);
-
-            // Создаем виджет с кнопками
-            QWidget* buttonWidget = new QWidget(ui->BooklistWidget);
-            QGridLayout* buttonLayout = new QGridLayout(buttonWidget);
-            QPushButton* prosmotrButton = new QPushButton("Просмотр");
-            QPushButton* returnButton = new QPushButton("Вернуть");
-            buttonLayout->addWidget(prosmotrButton, 0, 0);
-            buttonLayout->addWidget(returnButton, 0, 1);
-
-            // Добавляем виджеты к элементу списка
-            bookLayout->addWidget(buttonWidget);
-            item->setSizeHint(bookWidget->sizeHint());
-            ui->BooklistWidget->setItemWidget(item, bookWidget);
-        }
-    }
-    
 }
+
+void Studentform::update_bibl_book_list(const QString& author, const QString& title) {
+    ui->BiblListWidget->clear();
+
+    QList<Book> all_books = Book::books(author, title);
+    QList<Book> student_books = StudentBook::getBooksByStudent(login);
+
+    for (Book &book : all_books) {
+        if (student_books.contains(book)) {
+            continue;
+        } // Skip if the student already has the book
+
+        QString book_info = QString("Название: %1, Автор: %2, Описание: %3")
+                            .arg(book.title())
+                            .arg(book.author())
+                            .arg(book.description());
+
+        QListWidgetItem* item = new QListWidgetItem();
+        ui->BiblListWidget->addItem(item);
+        item->setSizeHint(QSize(0, 50)); // Adjust the size to fit your widget
+
+        QWidget* widget = new QWidget();
+        QLabel* label = new QLabel(book_info);
+        QPushButton* detailButton = new QPushButton("Подробнее");
+        QPushButton* takeButton = new QPushButton("Взять");
+
+        QHBoxLayout* layout = new QHBoxLayout();
+        layout->addWidget(label);
+        layout->addWidget(detailButton);
+        layout->addWidget(takeButton);
+        widget->setLayout(layout);
+
+        ui->BiblListWidget->setItemWidget(item, widget);
+
+        connect(detailButton, &QPushButton::clicked, [=]() {
+            BookForm *bookForm = new BookForm(&book);
+            bookForm->setModal(true);
+            bookForm->open();
+        });
+
+        connect(takeButton, &QPushButton::clicked, [=]() {
+            StudentBook::takeBook(login, book);
+            update_student_book_list();
+        });
+    }
+}
+
 
 void Studentform::on_Vihod_clicked()
 {
@@ -92,11 +133,5 @@ void Studentform::on_Vihod_clicked()
     this->hide();
 }
 
-void Studentform::on_AddButton_clicked()
-{
-    QString book; // Idd книги
 
-    update_student();
-   // StudentBook(login,book); // берем книгу из библиотеки
-}
 

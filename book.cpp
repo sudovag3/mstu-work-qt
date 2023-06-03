@@ -90,6 +90,10 @@ void Book::setCover(const QString &cover) {
     }
 }
 
+bool Book::operator==(const Book &other) const {
+    return id_ == other.id();
+}
+
 // Method to get all books
 QList<Book> Book::books(const QString& filterAuthor, const QString& filterTitle) {
     QList<Book> booksList;

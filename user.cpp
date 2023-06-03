@@ -11,6 +11,7 @@
 #include <QTime>
 
 
+
 // Конструктор класса User
 User::User(const QString& login, const QString& password, const QString& user_type)
     : login_(login), password_(password), user_type_(user_type) {
@@ -41,6 +42,19 @@ User::User(const QString& login, const QString& password, const QString& user_ty
     file.close();
     qInfo() << "Created user: " << login_;
 }
+
+int User::count_users() {
+    QFile file("users.json");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open file";
+        return 0;
+    }
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    file.close();
+    QJsonObject users = doc.object();
+    return users.size();
+}
+
 
 User::User(const QString &login, const QString &password_hash, const QString &user_type, bool is_hashed)
     : login_(login), password_(password_hash), user_type_(user_type) {
@@ -204,7 +218,6 @@ void User::set_type(const QString &type) {
     file.close();
     user_type_ = type; // Обновляем значение типа в экземпляре класса
 }
-
 
 // Функция изменения пароля
 void User::set_password(const QString& password) {

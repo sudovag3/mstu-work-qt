@@ -22,6 +22,9 @@ public:
     explicit Studentform(QWidget *parent = 0);
     ~Studentform();
 
+    void update_student_book_list();
+    void update_bibl_book_list(const QString& author, const QString& title);
+
     QString login;
     QJsonDocument doc;
     QJsonArray docAr;
@@ -31,10 +34,6 @@ public:
 private slots:
     void on_Vihod_clicked();
 
-    void update_student();
-
-    // Слот добавления нового текста в массив текстов
-    void on_AddButton_clicked();
 
 private:
     Ui::Studentform *ui;

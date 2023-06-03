@@ -95,13 +95,13 @@
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="label_image">
+  <widget class="QLabel" name="bookImage">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>1</y>
-     <width>564</width>
-     <height>421</height>
+     <x>16</x>
+     <y>12</y>
+     <width>541</width>
+     <height>411</height>
     </rect>
    </property>
    <property name="text">

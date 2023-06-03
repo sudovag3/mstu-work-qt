@@ -17,6 +17,7 @@ public:
     // Функция поиска пользователя по логину и паролю
     static User* find_user(const QString& login, const QString& password);
     static void delete_user_from_file(const QString &login);
+    static int count_users();
 
 
     // Функции изменения логина и пароля

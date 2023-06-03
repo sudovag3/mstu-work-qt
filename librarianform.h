@@ -15,6 +15,7 @@ class Librarianform : public QDialog
 public:
     explicit Librarianform(QWidget *parent = nullptr);
     void update_book_list(const QString& author = QString(), const QString& title = QString());
+    void update_student_list();
     ~Librarianform();
 
 private slots:
