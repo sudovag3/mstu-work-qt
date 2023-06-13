@@ -3,6 +3,9 @@
 #include "documentation.h"
 #include "authors.h"
 #include "adminform.h"
+#include <QDesktopServices>
+#include <QUrl>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,9 +35,7 @@ void MainWindow::showAdminForm()
 
 void MainWindow::on_DocButton_clicked()
 {
-    Documentation Docum;
-    Docum.setModal(true);
-    Docum.exec();
+    QDesktopServices::openUrl(QUrl::fromUserInput("https://talented-gaura-042.notion.site/f9a6b4cf7c934eb7a9cfc40da01619f4?pvs=4"));
 }
 
 
@@ -45,3 +46,8 @@ void MainWindow::on_InfAuthorButton_clicked()
     Author.exec();
 }
 
+
+void MainWindow::on_reviewFormButton_clicked()
+{
+    QDesktopServices::openUrl(QUrl::fromUserInput("https://formdesigner.ru/form/view/199816"));
+}

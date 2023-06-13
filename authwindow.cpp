@@ -58,6 +58,6 @@ void AuthWindow::on_loginButton_clicked()
          }
 
     } else {
-        QMessageBox::warning(this, "Упс", "Неудачная попытка входа");
+        QMessageBox::warning(this, "Ошибка", "Неудачная попытка входа");
     }
 }

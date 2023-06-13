@@ -13,6 +13,7 @@ EditBookForm::EditBookForm(const Book *book, QWidget *parent)
     ui->autorEdit->setText(book_->author());
     ui->DescriptionEdit->setText(book_->description());
     ui->genreEdit->setText(book_->genre());
+    ui->linkEdit->setText(book_->link());
     ui->quantityBox->setValue(book_->quantity());
     ui->imagePathEdit->setText(book_->cover());
 }
@@ -29,7 +30,7 @@ void EditBookForm::on_saveBookButton_clicked() {
     Book::getBookById(book_->id()).setGenre(ui->genreEdit->text());
     Book::getBookById(book_->id()).setQuantity(ui->quantityBox->value());
     Book::getBookById(book_->id()).setCover(ui->imagePathEdit->text());
-
+    Book::getBookById(book_->id()).setLink(ui->linkEdit->text());
     // Вызываем сигнал, что книга была изменена
     emit bookEdited();
 }

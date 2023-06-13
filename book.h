@@ -8,7 +8,7 @@
 class Book
 {
 public:
-    Book(const QString& id, const QString& title, const QString& description, const QString& author, const QString& genre, const QString& cover, int quantity);
+    Book(const QString& id, const QString& title, const QString& description, const QString& author, const QString& genre, const QString& cover, int quantity, const QString& link);
     Book(const QJsonObject &json);
     // Getters
     QString id() const;
@@ -17,10 +17,13 @@ public:
     QString author() const;
     QString genre() const;
     QString cover() const;
+    QString link() const;
+
     int quantity() const;
     QJsonObject toJson() const;
 
     // Setters
+    void setLink(const QString &link);
     void setTitle(const QString &title);
     void setDescription(const QString &description);
     void setAuthor(const QString &author);
@@ -46,6 +49,7 @@ private:
     QString genre_;
     QString cover_;
     int quantity_;
+    QString link_;
 };
 
 #endif // BOOK_H

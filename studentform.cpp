@@ -7,6 +7,7 @@
 #include "bookform.h"
 
 #include <QString>
+#include <QUrl>
 
 #include <QJsonArray>
 #include <QJsonObject>
@@ -14,7 +15,7 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QDebug>
-
+#include <QDesktopServices>
 #include <QList>
 #include <QPushButton>
 #include <QString>
@@ -41,7 +42,6 @@ Studentform::~Studentform()
 
 void Studentform::update_student_book_list() {
     ui->BookListWidget->clear();
-    qWarning() << login;
     QList<Book> student_books = StudentBook::getBooksByStudent(login);
     for (Book &book : student_books) {
         QString book_info = QString("Название: %1, Автор: %2, Описание: %3")
@@ -67,14 +67,13 @@ void Studentform::update_student_book_list() {
         ui->BookListWidget->setItemWidget(item, widget);
 
         connect(viewButton, &QPushButton::clicked, [=]() {
-            BookForm *bookForm = new BookForm(&book);
-            bookForm->setAttribute(Qt::WA_DeleteOnClose);
-            bookForm->open();
+            QDesktopServices::openUrl(QUrl::fromUserInput(book.link()));
         });
 
         connect(returnButton, &QPushButton::clicked, [=]() {
             StudentBook::returnBook(login, book);
             update_student_book_list();
+            update_bibl_book_list("", "");
         });
     }
 }
@@ -101,26 +100,27 @@ void Studentform::update_bibl_book_list(const QString& author, const QString& ti
 
         QWidget* widget = new QWidget();
         QLabel* label = new QLabel(book_info);
-        QPushButton* detailButton = new QPushButton("Подробнее");
+//        QPushButton* detailButton = new QPushButton("Подробнее");
         QPushButton* takeButton = new QPushButton("Взять");
 
         QHBoxLayout* layout = new QHBoxLayout();
         layout->addWidget(label);
-        layout->addWidget(detailButton);
+//        layout->addWidget(detailButton);
         layout->addWidget(takeButton);
         widget->setLayout(layout);
 
         ui->BiblListWidget->setItemWidget(item, widget);
 
-        connect(detailButton, &QPushButton::clicked, [=]() {
-            BookForm *bookForm = new BookForm(&book);
-            bookForm->setModal(true);
-            bookForm->open();
-        });
+//        connect(detailButton, &QPushButton::clicked, [=]() {
+//            BookForm *bookForm = new BookForm(&book);
+//            bookForm->setModal(true);
+//            bookForm->open();
+//        });
 
         connect(takeButton, &QPushButton::clicked, [=]() {
             StudentBook::takeBook(login, book);
             update_student_book_list();
+            update_bibl_book_list("", "");
         });
     }
 }
@@ -133,5 +133,11 @@ void Studentform::on_Vihod_clicked()
     this->hide();
 }
 
+void Studentform::on_searchButton_clicked() {
 
+    QString author = ui->searchAutorEdit->text();
+    QString title = ui->searchTitleEdit->text();
+    qInfo() << author << title;
 
+    update_bibl_book_list(author, title);
+}

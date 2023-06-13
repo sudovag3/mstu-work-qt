@@ -5,8 +5,8 @@
 #include <QJsonArray>
 #include <QDebug>
 
-Book::Book(const QString& id, const QString& title, const QString& description, const QString& author, const QString& genre, const QString& cover, int quantity)
-    : id_(id), title_(title), description_(description), author_(author), genre_(genre), cover_(cover), quantity_(quantity) {
+Book::Book(const QString& id, const QString& title, const QString& description, const QString& author, const QString& genre, const QString& cover, int quantity, const QString& link)
+    : id_(id), title_(title), description_(description), author_(author), genre_(genre), cover_(cover), quantity_(quantity), link_(link) {
     save();
 }
 
@@ -14,10 +14,15 @@ Book::Book(const QJsonObject &json) {
     id_ = json["id"].toString();
     title_ = json["title"].toString();
     cover_ = json["cover"].toString();
+    link_ = json["link"].toString();
     description_ = json["description"].toString();
     author_ = json["author"].toString();
     genre_ = json["genre"].toString();
     quantity_ = json["quantity"].toInt();
+}
+
+QString Book::link() const {
+    return link_;
 }
 
 QString Book::id() const {
@@ -46,6 +51,13 @@ int Book::quantity() const {
 
 QString Book::cover() const {
     return cover_;
+}
+
+void Book::setLink(const QString &link) {
+    if (link != link_) {
+        link_ = link;
+        save();
+    }
 }
 
 void Book::setTitle(const QString &title) {
@@ -201,5 +213,6 @@ QJsonObject Book::toJson() const {
     json["genre"] = genre_;
     json["quantity"] = quantity_;
     json["cover"] = cover_;
+    json["link"] = link_;
     return json;
 }

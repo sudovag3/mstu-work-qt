@@ -35,6 +35,8 @@ private slots:
     void on_Vihod_clicked();
 
 
+    void on_searchButton_clicked();
+
 private:
     Ui::Studentform *ui;
 };

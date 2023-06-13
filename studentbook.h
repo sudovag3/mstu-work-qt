@@ -12,6 +12,7 @@ public:
     static QList<Book> getBooksByStudent(const QString& student_login);
     static void returnBook(const QString& student_login, const Book& book);
     static void takeBook(const QString& student_login, const Book& book);
+    static bool checkBook(const QString& student_login, const Book& book);
     // Виртуальный деструктор
     virtual ~StudentBook();
 

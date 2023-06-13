@@ -25,6 +25,8 @@ private slots:
 
     void on_InfAuthorButton_clicked();
 
+    void on_reviewFormButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     AuthWindow * authWindow;

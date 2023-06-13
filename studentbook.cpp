@@ -94,6 +94,33 @@ void StudentBook::returnBook(const QString& student_login, const Book& book) {
     file.close();
 }
 
+bool StudentBook::checkBook(const QString& student_login, const Book& book) {
+    QFile file("studentbooks.json");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open file";
+        return false;
+    }
+
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    QJsonObject student_books = doc.object();
+    QJsonArray books = student_books[student_login].toArray();
+
+    for (QJsonArray::iterator it = books.begin(); it != books.end(); it++) {
+        QJsonObject obj = it->toObject();
+        QString idd_book = obj["Idd_Book"].toString();
+        // Если ID книги совпадает с ID любой из книг студента, возвращаем true
+        if (book.id() == idd_book) {
+            file.close();
+            return true;
+        }
+    }
+
+    // Если ни одно из ID книг не совпало, возвращаем false
+    file.close();
+    return false;
+}
+
+
 
 void StudentBook::takeBook(const QString& student_login, const Book& book) {
     QFile file("studentbooks.json");

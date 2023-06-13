@@ -213,6 +213,7 @@ void Librarianform::on_createBookButton_clicked()
     QString title = ui->titleEdit->text();
     QString author = ui->autorEdit->text();
     QString genre = ui->genreEdit->text();
+    QString link = ui->linkEdit->text();
     QString description = ui->DescriptionEdit->toPlainText();
     int quantity = ui->quantityBox->value();
     QString coverPath = ui->imagePathEdit->text();
@@ -222,12 +223,13 @@ void Librarianform::on_createBookButton_clicked()
                                  tr("Все поля должны быть заполнены и обложка должна быть выбрана!"));
     } else {
         loadGlobalID();
-        Book newBook(QString::number(globalID), title, description, author, genre, coverPath, quantity); // Тут подразумевается, что у вас есть подходящий конструктор в классе Book
+        Book newBook(QString::number(globalID), title, description, author, genre, coverPath, quantity, link); // Тут подразумевается, что у вас есть подходящий конструктор в классе Book
         globalID++;
         saveGlobalID();
         ui->titleEdit->clear();
         ui->autorEdit->clear();
         ui->genreEdit->clear();
+        ui->linkEdit->clear();
         ui->DescriptionEdit->clear();
         ui->quantityBox->setValue(0);
         ui->imagePathEdit->clear();
@@ -240,7 +242,6 @@ void Librarianform::on_searchButton_clicked() {
 
     QString author = ui->searchAutorEdit->text();
     QString title = ui->searchTitleEdit->text();
-    qInfo() << "ТЕст";
     qInfo() << author << title;
 
     update_book_list(author, title);
